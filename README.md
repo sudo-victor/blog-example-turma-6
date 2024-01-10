@@ -25,6 +25,9 @@ Post {
    3. Nao deve logar caso a senha esteja incorreta
    4. Deve retornar a credencial caso esteja tudo certo
 3. Criar um post
+   1. Deve ser possível criar um post, informando: content, author
+   2. Nao deve ser possível criar um post com o conteudo vazio
+   3. Nao deve ser possível criar um post sem um author
 4. Incrementar o like
 5. Decrementar o like
 
