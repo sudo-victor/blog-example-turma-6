@@ -23,6 +23,7 @@ Post {
    1. Deve ser informado o email e a senha
    2. Nao deve logar caso o email nao exista
    3. Nao deve logar caso a senha esteja incorreta
+   4. Deve retornar a credencial caso esteja tudo certo
 3. Criar um post
 4. Incrementar o like
 5. Decrementar o like
@@ -38,8 +39,8 @@ Post {
 ## Dúvidas
 
 [x] - Yup
-[-] - Criptografia de senha
-[ ] - Auth/Authorization (Token)
+[x] - Criptografia de senha
+[x] - Auth/Authorization (Token)
 [ ] - Interface do schema no mongoose
 [ ] - Relacionamentos
 [ ] - Arquitetura e organizacao do código
