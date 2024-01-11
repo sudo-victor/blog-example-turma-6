@@ -29,6 +29,10 @@ Post {
    2. Nao deve ser possível criar um post com o conteudo vazio
    3. Nao deve ser possível criar um post sem um author
 4. Incrementar o like
+   1. Deve ser possivel incrementar a quantidade de like de um post, passando: postId
+   2. Validar se existe um post com aquele id
+   3. Pegar a quantidade atual de like
+   4. Incrementar o post
 5. Decrementar o like
 
 ## Configuracao
