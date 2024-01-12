@@ -66,3 +66,14 @@ BODY -> Corpo -> A info principal
 HEADERS -> Cabecalho -> Sao informacoes adicionais que o cliente passa para o servidor, por exemplo: Qual é o navego, qual é o formato de dados
 PARAMS
 QUERY
+
+
+Architecture
+
+MVC -> Model View Controller
+N-Tier -> Presentation, Business Rules, Data
+Port/Adapter
+Clean Architecture
+Event Driven Arch
+
+Entities
