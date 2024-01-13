@@ -7,6 +7,10 @@ export class UserRepository {
     })
   }
 
+  async findByEmail(email: string) {
+    return await UserModel.findOne({ email })
+  }
+
   async save(nickname: string, email: string, password: string) {
     return await UserModel.create({
       nickname: nickname,

@@ -1,62 +1,27 @@
 import { Router } from "express"
-import bcrypt from "bcrypt"
-import * as yup from "yup"
-import { sign, verify } from "jsonwebtoken"
+
+import { verify } from "jsonwebtoken"
 import { UserModel } from "./entities/user"
 import { UserRepository } from "./repositories/user-repository"
 import { UserService } from "./services/user-service"
 import { UserController } from "./controllers/user-controller"
+import { LoginService } from "./services/login-service"
+import { HasherBcrypt } from "./cryptography/hasher-bcrypt"
+import { TokenJwt } from "./jwt/token-jwt"
+import { LoginController } from "./controllers/login-controller"
 
 const userRoutes = Router()
 
 const userRepository = new UserRepository()
 const userService = new UserService(userRepository)
+const hasher = new HasherBcrypt()
+const jwt = new TokenJwt()
+const loginService = new LoginService(userRepository, hasher, jwt)
+const loginController = new LoginController(loginService)
 const userController = new UserController(userService)
 
 userRoutes.post("/users", userController.create.bind(userController))
-// userRoutes.post("/users", async (req, res) => {
-//   return userController.create(req, res)
-// })
-
-userRoutes.post("/users/signin", async (request, response) => {
-  // 1. Deve ser informado o email e a senha
-  const { body } = request
-
-  const signinBodySchema = yup.object({
-    email: yup.string().email().required(),
-    password: yup.string().min(6).required(),
-  })
-
-  try {
-    await signinBodySchema.validate(body)
-  } catch (err: any) {
-    return response.status(400).json({ message: err.errors })
-  }
-
-  // 2. Nao deve logar caso o email nao exista
-  const user = await UserModel.findOne({ email: body.email })
-  if (!user) {
-    return response.status(400).json({ message: "Invalid credentials" })
-  }
-
-  // 3. Nao deve logar caso a senha esteja incorreta
-  const passwordIsValid = await bcrypt.compare(body.password, user.password as string)
-  if (!passwordIsValid) {
-    return response.status(400).json({ message: "Invalid credentials" })
-  }
-
-  // 4. Deve retornar a credencial caso esteja tudo certo
-  // 1 -> payload
-  const payload = { id: user.id, nickname: user.nickname }
-  // 2 -> assinatura
-  const secretKey = "jefghkfjd[;whiortuoegjrwefkqldw;qfkegjroitwd;qkegjrth"
-  // 3 -> options
-  const options = { expiresIn: "10m" }
-
-  const token = sign(payload, secretKey, options)
-
-  return response.status(200).json({ token })
-})
+userRoutes.post("/users/signin", loginController.login.bind(loginController))
 
 userRoutes.get("/users", async (request, response, next) => {
   // 1 - Valida se o usuário tem uma credencial
