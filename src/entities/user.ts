@@ -1,6 +1,12 @@
-import { Schema, model } from "mongoose"
+import { Schema, model, Document } from "mongoose"
 
-const UserSchema = new Schema({
+export interface IUser extends Document {
+  nickname: string;
+  email: string;
+  password: string;
+}
+
+const UserSchema = new Schema<IUser>({
   nickname: { type: String, unique: true },
   email: { type: String, unique: true },
   password: { type: String, minLength: 6 }

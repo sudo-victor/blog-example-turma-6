@@ -1,0 +1,2 @@
+- Serve para tipar objeto
+- Interface serve APENAS para o desenvolvimento
